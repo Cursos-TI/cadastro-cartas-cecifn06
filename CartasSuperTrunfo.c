@@ -66,6 +66,7 @@ int main(void) {
         printf("PIB: %.2f\n", p->pib);
         printf("Pontos turisticos: %d\n\n", p->pontos_turisticos);
     }
+    
 
     return 0;
 }
