@@ -1,6 +1,5 @@
-// cartas.c - Nível Novato (apenas 2 cartas)
+// super_trunfo.c - Nível Novato (apenas 2 cartas)
 #include <stdio.h>
-#include <string.h>
 
 #define NAME_LEN 64
 
@@ -9,66 +8,88 @@ typedef struct {
     char codigo[5];           // Ex: "A01"
     char nome[NAME_LEN];      // Nome da cidade
     int populacao;            // Número de habitantes
-    double area;               // Área em km²
-    double pib;                // PIB da cidade
+    float area;               // Área em km²
+    float pib;                // PIB da cidade
     int pontos_turisticos;    // Número de pontos turísticos
 } Carta;
 
 int main(void) {
-    Carta cartas[2];  // Apenas 2 cartas
+    Carta carta1, carta2;
 
     printf("Cadastro de cartas - Nível Novato\n\n");
 
-    for (int i = 0; i < 2; i++) {
-        printf("--- Cadastro da Carta %d ---\n", i + 1);
+    // ===== Carta 1 =====
+    printf("--- Cadastro da Carta 1 ---\n");
+    printf("Estado (A-H): ");
+    scanf(" %c", &carta1.estado);
 
-        // Estado (apenas 1 letra)
-        printf("Estado (A-H): ");
-        scanf(" %c", &cartas[i].estado);
+    printf("Codigo da carta (ex: A01): ");
+    scanf("%s", carta1.codigo);
 
-        // Código da carta
-        printf("Codigo da carta (ex: A01): ");
-        scanf("%s", cartas[i].codigo);
+    printf("Nome da cidade: ");
+    getchar(); // limpar o enter pendente
+    fgets(carta1.nome, NAME_LEN, stdin);
 
-        // Nome da cidade (pode ter espaços)
-        printf("Nome da cidade: ");
-        getchar(); // limpar buffer do enter anterior
-        fgets(cartas[i].nome, NAME_LEN, stdin);
-        size_t ln = strlen(cartas[i].nome);
-        if (ln > 0 && cartas[i].nome[ln - 1] == '\n')
-            cartas[i].nome[ln - 1] = '\0';
+    printf("Populacao (numero inteiro): ");
+    scanf("%d", &carta1.populacao);
 
-        // População
-        printf("Populacao (numero inteiro): ");
-        scanf("%d", &cartas[i].populacao);
+    printf("Area (km2, ex: 123.45): ");
+    scanf("%f", &carta1.area);
 
-        // Área
-        printf("Area (km2, ex: 123.45): ");
-        scanf("%f", &cartas[i].area);
+    printf("PIB (ex: 1234567.89): ");
+    scanf("%f", &carta1.pib);
 
-        // PIB
-        printf("PIB (ex: 1234567.89): ");
-        scanf("%f", &cartas[i].pib);
+    printf("Pontos turisticos (inteiro): ");
+    scanf("%d", &carta1.pontos_turisticos);
 
-        // Pontos turísticos
-        printf("Pontos turisticos (inteiro): ");
-        scanf("%d", &cartas[i].pontos_turisticos);
+    printf("\n");
 
-        printf("\n");
-    }
+    // ===== Carta 2 =====
+    printf("--- Cadastro da Carta 2 ---\n");
+    printf("Estado (A-H): ");
+    scanf(" %c", &carta2.estado);
 
-    // Exibir as cartas cadastradas
+    printf("Codigo da carta (ex: A01): ");
+    scanf("%s", carta2.codigo);
+
+    printf("Nome da cidade: ");
+    getchar(); // limpar o enter pendente
+    fgets(carta2.nome, NAME_LEN, stdin);
+
+    printf("Populacao (numero inteiro): ");
+    scanf("%d", &carta2.populacao);
+
+    printf("Area (km2, ex: 123.45): ");
+    scanf("%f", &carta2.area);
+
+    printf("PIB (ex: 1234567.89): ");
+    scanf("%f", &carta2.pib);
+
+    printf("Pontos turisticos (inteiro): ");
+    scanf("%d", &carta2.pontos_turisticos);
+
+    printf("\n");
+
+    // ===== Exibir as cartas =====
     printf("=== Cartas cadastradas ===\n\n");
-    for (int i = 0; i < 2; i++) {
-        printf("Carta %d:\n", i + 1);
-        printf("Estado: %c\n", cartas[i].estado);
-        printf("Codigo: %s\n", cartas[i].codigo);
-        printf("Cidade: %s\n", cartas[i].nome);
-        printf("Populacao: %d\n", cartas[i].populacao);
-        printf("Area: %.2f km²\n", cartas[i].area);
-        printf("PIB: %.2f\n", cartas[i].pib);
-        printf("Pontos Turisticos: %d\n\n", cartas[i].pontos_turisticos);
-    }
+
+    printf("Carta 1:\n");
+    printf("Estado: %c\n", carta1.estado);
+    printf("Codigo: %s\n", carta1.codigo);
+    printf("Cidade: %s", carta1.nome); // fgets já guarda o \n
+    printf("Populacao: %d\n", carta1.populacao);
+    printf("Area: %.2f km²\n", carta1.area);
+    printf("PIB: %.2f\n", carta1.pib);
+    printf("Pontos Turisticos: %d\n\n", carta1.pontos_turisticos);
+
+    printf("Carta 2:\n");
+    printf("Estado: %c\n", carta2.estado);
+    printf("Codigo: %s\n", carta2.codigo);
+    printf("Cidade: %s", carta2.nome);
+    printf("Populacao: %d\n", carta2.populacao);
+    printf("Area: %.2f km²\n", carta2.area);
+    printf("PIB: %.2f\n", carta2.pib);
+    printf("Pontos Turisticos: %d\n\n", carta2.pontos_turisticos);
 
     return 0;
 }
