@@ -1,73 +1,74 @@
-// cartas.c  - Nível Novato
+// cartas.c - Nível Novato (apenas 2 cartas)
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#define STATES 8
-#define CITIES_PER_STATE 4
 #define NAME_LEN 64
 
 typedef struct {
-    char codigo[5]; // ex: "A01"
-    char nome[NAME_LEN];
-    long long populacao;
-    double area;
-    double pib;
-    int pontos_turisticos;
+    char estado;              // Uma letra (A-H)
+    char codigo[5];           // Ex: "A01"
+    char nome[NAME_LEN];      // Nome da cidade
+    int populacao;            // Número de habitantes
+    double area;               // Área em km²
+    double pib;                // PIB da cidade
+    int pontos_turisticos;    // Número de pontos turísticos
 } Carta;
 
 int main(void) {
-    Carta cartas[STATES * CITIES_PER_STATE];
-    int idx = 0;
-    char stateLetter = 'A';
+    Carta cartas[2];  // Apenas 2 cartas
 
-    printf("Cadastro de cartas - Nível Novato\n");
-    printf("Serao cadastradas %d estados x %d cidades = %d cartas\n\n",
-           STATES, CITIES_PER_STATE, STATES * CITIES_PER_STATE);
+    printf("Cadastro de cartas - Nível Novato\n\n");
 
-    for (int s = 0; s < STATES; ++s) {
-        for (int c = 1; c <= CITIES_PER_STATE; ++c) {
-            Carta *p = &cartas[idx];
-            snprintf(p->codigo, sizeof p->codigo, "%c%02d", stateLetter + s, c);
+    for (int i = 0; i < 2; i++) {
+        printf("--- Cadastro da Carta %d ---\n", i + 1);
 
-            printf("--- Cadastro %s ---\n", p->codigo);
-            printf("Nome da cidade: ");
-            if (fgets(p->nome, NAME_LEN, stdin) == NULL) p->nome[0] = '\0';
-            size_t ln = strlen(p->nome);
-            if (ln > 0 && p->nome[ln-1] == '\n') p->nome[ln-1] = '\0';
+        // Estado (apenas 1 letra)
+        printf("Estado (A-H): ");
+        scanf(" %c", &cartas[i].estado);
 
-            printf("Populacao (numero inteiro): ");
-            if (scanf("%lld", &p->populacao) != 1) p->populacao = 0;
+        // Código da carta
+        printf("Codigo da carta (ex: A01): ");
+        scanf("%s", cartas[i].codigo);
 
-            printf("Area (km2, ex: 123.45): ");
-            if (scanf("%lf", &p->area) != 1) p->area = 0.0;
+        // Nome da cidade (pode ter espaços)
+        printf("Nome da cidade: ");
+        getchar(); // limpar buffer do enter anterior
+        fgets(cartas[i].nome, NAME_LEN, stdin);
+        size_t ln = strlen(cartas[i].nome);
+        if (ln > 0 && cartas[i].nome[ln - 1] == '\n')
+            cartas[i].nome[ln - 1] = '\0';
 
-            printf("PIB (ex: 1234567.89): ");
-            if (scanf("%lf", &p->pib) != 1) p->pib = 0.0;
+        // População
+        printf("Populacao (numero inteiro): ");
+        scanf("%d", &cartas[i].populacao);
 
-            printf("Pontos turisticos (inteiro): ");
-            if (scanf("%d", &p->pontos_turisticos) != 1) p->pontos_turisticos = 0;
+        // Área
+        printf("Area (km2, ex: 123.45): ");
+        scanf("%f", &cartas[i].area);
 
-            // limpar o restante da linha para o próximo fgets
-            int ch;
-            while ((ch = getchar()) != '\n' && ch != EOF);
+        // PIB
+        printf("PIB (ex: 1234567.89): ");
+        scanf("%f", &cartas[i].pib);
 
-            idx++;
-            printf("\n");
-        }
+        // Pontos turísticos
+        printf("Pontos turisticos (inteiro): ");
+        scanf("%d", &cartas[i].pontos_turisticos);
+
+        printf("\n");
     }
 
+    // Exibir as cartas cadastradas
     printf("=== Cartas cadastradas ===\n\n");
-    for (int i = 0; i < idx; ++i) {
-        Carta *p = &cartas[i];
-        printf("%s - %s\n", p->codigo, p->nome);
-        printf("Populacao: %lld\n", p->populacao);
-        printf("Area: %.2f\n", p->area);
-        printf("PIB: %.2f\n", p->pib);
-        printf("Pontos turisticos: %d\n\n", p->pontos_turisticos);
+    for (int i = 0; i < 2; i++) {
+        printf("Carta %d:\n", i + 1);
+        printf("Estado: %c\n", cartas[i].estado);
+        printf("Codigo: %s\n", cartas[i].codigo);
+        printf("Cidade: %s\n", cartas[i].nome);
+        printf("Populacao: %d\n", cartas[i].populacao);
+        printf("Area: %.2f km²\n", cartas[i].area);
+        printf("PIB: %.2f\n", cartas[i].pib);
+        printf("Pontos Turisticos: %d\n\n", cartas[i].pontos_turisticos);
     }
-    
 
     return 0;
 }
-
