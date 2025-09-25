@@ -1,16 +1,22 @@
-// super_trunfo.c - Nível Novato (apenas 2 cartas)
+// super_trunfo_n1.c - Nível Novato
 #include <stdio.h>
+#include <string.h>
 
 #define NAME_LEN 64
 
 typedef struct {
-    char estado;              // Uma letra (A-H)
-    char codigo[5];           // Ex: "A01"
-    char nome[NAME_LEN];      // Nome da cidade
-    int populacao;            // Número de habitantes
-    float area;               // Área em km²
-    float pib;                // PIB da cidade
-    int pontos_turisticos;    // Número de pontos turísticos
+    char estado;               // Uma letra (A-H)
+    char codigo[5];            // Ex: "A01"
+    char nome[NAME_LEN];       // Nome da cidade
+    unsigned long int populacao; // Número de habitantes (já preparado p/ nivel 3)
+    float area;                // Área em km²
+    float pib;                 // PIB da cidade
+    int pontos_turisticos;     // Número de pontos turísticos
+
+    // Campos extras (ainda não usados neste nível, mas já prontos p/ evolução)
+    float densidade;
+    float pib_per_capita;
+    float super_poder;
 } Carta;
 
 int main(void) {
@@ -29,9 +35,10 @@ int main(void) {
     printf("Nome da cidade: ");
     getchar(); // limpar o enter pendente
     fgets(carta1.nome, NAME_LEN, stdin);
+    carta1.nome[strcspn(carta1.nome, "\n")] = '\0'; // remove o \n do fgets
 
     printf("Populacao (numero inteiro): ");
-    scanf("%d", &carta1.populacao);
+    scanf("%lu", &carta1.populacao);
 
     printf("Area (km2, ex: 123.45): ");
     scanf("%f", &carta1.area);
@@ -55,9 +62,10 @@ int main(void) {
     printf("Nome da cidade: ");
     getchar(); // limpar o enter pendente
     fgets(carta2.nome, NAME_LEN, stdin);
+    carta2.nome[strcspn(carta2.nome, "\n")] = '\0';
 
     printf("Populacao (numero inteiro): ");
-    scanf("%d", &carta2.populacao);
+    scanf("%lu", &carta2.populacao);
 
     printf("Area (km2, ex: 123.45): ");
     scanf("%f", &carta2.area);
@@ -76,8 +84,8 @@ int main(void) {
     printf("Carta 1:\n");
     printf("Estado: %c\n", carta1.estado);
     printf("Codigo: %s\n", carta1.codigo);
-    printf("Cidade: %s", carta1.nome); // fgets já guarda o \n
-    printf("Populacao: %d\n", carta1.populacao);
+    printf("Cidade: %s\n", carta1.nome);
+    printf("Populacao: %lu\n", carta1.populacao);
     printf("Area: %.2f km²\n", carta1.area);
     printf("PIB: %.2f\n", carta1.pib);
     printf("Pontos Turisticos: %d\n\n", carta1.pontos_turisticos);
@@ -85,11 +93,13 @@ int main(void) {
     printf("Carta 2:\n");
     printf("Estado: %c\n", carta2.estado);
     printf("Codigo: %s\n", carta2.codigo);
-    printf("Cidade: %s", carta2.nome);
-    printf("Populacao: %d\n", carta2.populacao);
+    printf("Cidade: %s\n", carta2.nome);
+    printf("Populacao: %lu\n", carta2.populacao);
     printf("Area: %.2f km²\n", carta2.area);
     printf("PIB: %.2f\n", carta2.pib);
     printf("Pontos Turisticos: %d\n\n", carta2.pontos_turisticos);
 
     return 0;
+}
+
 }
