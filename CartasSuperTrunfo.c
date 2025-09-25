@@ -1,28 +1,27 @@
-// super_trunfo_n1.c - Nível Novato
+// super_trunfo_n2.c - Nível Aventureiro
 #include <stdio.h>
 #include <string.h>
 
 #define NAME_LEN 64
 
 typedef struct {
-    char estado;               // Uma letra (A-H)
-    char codigo[5];            // Ex: "A01"
-    char nome[NAME_LEN];       // Nome da cidade
-    unsigned long int populacao; // Número de habitantes (já preparado p/ nivel 3)
-    float area;                // Área em km²
-    float pib;                 // PIB da cidade
-    int pontos_turisticos;     // Número de pontos turísticos
+    char estado;               
+    char codigo[5];            
+    char nome[NAME_LEN];       
+    unsigned long int populacao; 
+    float area;                
+    float pib;                 
+    int pontos_turisticos;     
 
-    // Campos extras (ainda não usados neste nível, mas já prontos p/ evolução)
+    // Novos campos calculados
     float densidade;
     float pib_per_capita;
-    float super_poder;
 } Carta;
 
 int main(void) {
     Carta carta1, carta2;
 
-    printf("Cadastro de cartas - Nível Novato\n\n");
+    printf("Cadastro de cartas - Nível Aventureiro\n\n");
 
     // ===== Carta 1 =====
     printf("--- Cadastro da Carta 1 ---\n");
@@ -33,9 +32,9 @@ int main(void) {
     scanf("%s", carta1.codigo);
 
     printf("Nome da cidade: ");
-    getchar(); // limpar o enter pendente
+    getchar(); 
     fgets(carta1.nome, NAME_LEN, stdin);
-    carta1.nome[strcspn(carta1.nome, "\n")] = '\0'; // remove o \n do fgets
+    carta1.nome[strcspn(carta1.nome, "\n")] = '\0';
 
     printf("Populacao (numero inteiro): ");
     scanf("%lu", &carta1.populacao);
@@ -49,6 +48,10 @@ int main(void) {
     printf("Pontos turisticos (inteiro): ");
     scanf("%d", &carta1.pontos_turisticos);
 
+    // Calcula atributos adicionais
+    carta1.densidade = (float)carta1.populacao / carta1.area;
+    carta1.pib_per_capita = carta1.pib / (float)carta1.populacao;
+
     printf("\n");
 
     // ===== Carta 2 =====
@@ -60,7 +63,7 @@ int main(void) {
     scanf("%s", carta2.codigo);
 
     printf("Nome da cidade: ");
-    getchar(); // limpar o enter pendente
+    getchar(); 
     fgets(carta2.nome, NAME_LEN, stdin);
     carta2.nome[strcspn(carta2.nome, "\n")] = '\0';
 
@@ -76,6 +79,10 @@ int main(void) {
     printf("Pontos turisticos (inteiro): ");
     scanf("%d", &carta2.pontos_turisticos);
 
+    // Calcula atributos adicionais
+    carta2.densidade = (float)carta2.populacao / carta2.area;
+    carta2.pib_per_capita = carta2.pib / (float)carta2.populacao;
+
     printf("\n");
 
     // ===== Exibir as cartas =====
@@ -88,7 +95,9 @@ int main(void) {
     printf("Populacao: %lu\n", carta1.populacao);
     printf("Area: %.2f km²\n", carta1.area);
     printf("PIB: %.2f\n", carta1.pib);
-    printf("Pontos Turisticos: %d\n\n", carta1.pontos_turisticos);
+    printf("Pontos Turisticos: %d\n", carta1.pontos_turisticos);
+    printf("Densidade Demografica: %.2f hab/km²\n", carta1.densidade);
+    printf("PIB per Capita: %.2f\n\n", carta1.pib_per_capita);
 
     printf("Carta 2:\n");
     printf("Estado: %c\n", carta2.estado);
@@ -97,9 +106,9 @@ int main(void) {
     printf("Populacao: %lu\n", carta2.populacao);
     printf("Area: %.2f km²\n", carta2.area);
     printf("PIB: %.2f\n", carta2.pib);
-    printf("Pontos Turisticos: %d\n\n", carta2.pontos_turisticos);
+    printf("Pontos Turisticos: %d\n", carta2.pontos_turisticos);
+    printf("Densidade Demografica: %.2f hab/km²\n", carta2.densidade);
+    printf("PIB per Capita: %.2f\n\n", carta2.pib_per_capita);
 
     return 0;
-}
-
 }
